@@ -22,4 +22,11 @@ public class EnemyControl : MonoBehaviour {
             );
         }
     }
+
+    // 나의 충돌체 영역에 트리거 설정이 된 충돌체가 부딪히면 발생하는 이벤트 함수
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Bullet") {
+            Debug.Log("Bullet Trigger Enter");
+        }
+    }
 }
