@@ -29,10 +29,13 @@ public class EnemyControl : MonoBehaviour {
             -60.0f, 60.0f), 50.0f, 0.0f
         );
     }
+
     // 나의 충돌체 영역에 트리거 설정이 된 충돌체가 부딪히면 발생하는 이벤트 함수
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Bullet") {
-            Debug.Log("Bullet Trigger Enter");
+            // Enemy를 맞췄다면 점수를 100점씩 증가시킴.
+            MainControl.Score += 100;
+
             // 폭발 이펙트 생성
             Instantiate(Explosion, myTransform.position, Quaternion.identity);
 
