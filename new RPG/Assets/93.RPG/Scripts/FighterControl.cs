@@ -27,6 +27,8 @@ public class FighterControl : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         Move();
+        // 몸통의 방향을 이동방향으로 돌려줌.
+        BodyDirectionChange();
     }
 
     private void OnAnimatorMove() {
@@ -91,4 +93,12 @@ public class FighterControl : MonoBehaviour {
         return CurrentVelocity.magnitude;
     }
 
+    void BodyDirectionChange() {
+        if (GetVelocitySpeed() > 0.0f) {
+            Vector3 newForward = myCharacterController.velocity;
+            newForward.y = 0.0f;
+            transform.forward = Vector3.Lerp(transform.forward, newForward
+                , BodyRotateSpeed * Time.deltaTime);
+        }
+    }
 }
