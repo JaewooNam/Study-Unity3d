@@ -26,7 +26,7 @@ public class FighterControl : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+        Move();
     }
 
     private void OnAnimatorMove() {
@@ -48,6 +48,21 @@ public class FighterControl : MonoBehaviour {
 
         // 우리가 이동하고자하는 방향
         Vector3 targetDirection = horizontal * right + vertical * forward;
+
+        // 현재 이동하는 방향에서 원하는 방향으로 조금씩 회전
+        MoveDirection = Vector3.RotateTowards(MoveDirection, targetDirection,
+            DirectionRotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000.0f);
+
+        // 방향이기떄문에 크기는 없애고 방향만 가져옴.
+        MoveDirection = MoveDirection.normalized;
+        
+        float speed = MoveSpeed;
+
+        // 이번 프레임에 움직일 양.
+        Vector3 moveAmount = (MoveDirection * speed * Time.deltaTime);
+
+        // 실제 이동하면서 충돌 되었는지 확인.
+        collisionFlags = myCharacterController.Move(moveAmount);
     }
 
     
