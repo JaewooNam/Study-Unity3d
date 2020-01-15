@@ -65,5 +65,30 @@ public class FighterControl : MonoBehaviour {
         collisionFlags = myCharacterController.Move(moveAmount);
     }
 
-    
+    private void OnGUI() {
+
+        GUILayout.Label("현재 속도 : " + GetVelocitySpeed().ToString());
+        // 캐릭터 컨트롤러 컴포넌트를 찾았고, 현재 내 캐릭터의 이동속도가 0이 아니라면,
+        if (myCharacterController != null && myCharacterController.velocity != Vector3.zero) {
+            GUILayout.Label("current Velocity Vector: ", myCharacterController.velocity.ToString());
+            GUILayout.Label("current Velocity Magnitude: ", myCharacterController.velocity.magnitude.ToString());
+        }
+    }
+
+    // 현재 내 캐릭터의 이동속도를 얻어온다.
+    float GetVelocitySpeed() {
+        if (myCharacterController.velocity == Vector3.zero) {
+            CurrentVelocity = Vector3.zero;
+        } else {
+            Vector3 goalVelocity = myCharacterController.velocity;
+            goalVelocity.y = 0.0f;
+
+            // fixedDeltaTime : ???
+            CurrentVelocity = Vector3.Lerp(CurrentVelocity, goalVelocity,
+                VelocityChangeSpeed * Time.fixedDeltaTime);
+        }
+
+        return CurrentVelocity.magnitude;
+    }
+
 }
