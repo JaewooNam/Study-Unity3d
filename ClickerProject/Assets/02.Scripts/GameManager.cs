@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
     
     public GameObject prefabCoffee;
 
+    public Sprite[] spriteF;
+    public Sprite[] spriteM;
+
+    public Vector2 limitPoint1;
+    public Vector2 limitPoint2;
+
     private void Awake() {
         // 현재의 게임 매니저 스크립트
         gm = this;
@@ -43,5 +49,18 @@ public class GameManager : MonoBehaviour
           // 위치값을 줄때는 각도값을 같이 줘야함.
           Instantiate(prefabCoffee, mousePosition, Quaternion.identity);
       }
+    }
+
+    private void OnDrawGizmos() {
+        Vector2 limitPoint3 = new Vector2(limitPoint2.x, limitPoint1.y);
+        Vector2 limitPoint4 = new Vector2(limitPoint1.x, limitPoint2.y);
+
+        // 선을 그림
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawLine(limitPoint1, limitPoint3);
+        Gizmos.DrawLine(limitPoint3, limitPoint2);
+        Gizmos.DrawLine(limitPoint1, limitPoint4);
+        Gizmos.DrawLine(limitPoint4, limitPoint2);
     }
 }
